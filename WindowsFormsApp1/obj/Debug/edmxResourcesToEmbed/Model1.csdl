@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ASinemaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Film">
+    <Key>
+      <PropertyRef Name="FilmNo" />
+    </Key>
+    <Property Name="FilmNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Tur" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Sure" Type="Int32" />
+    <Property Name="Ucret" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Puan" Type="Int32" />
+    <Property Name="VizyonTarihi" Type="DateTime" Precision="3" />
+    <Property Name="SNo" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Kullanici">
+    <Key>
+      <PropertyRef Name="KullaniciNo" />
+    </Key>
+    <Property Name="KullaniciNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KullaniciAd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AdSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Gorev" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="SubeNo" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Salon">
+    <Key>
+      <PropertyRef Name="SalonNo" />
+    </Key>
+    <Property Name="SalonNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SalonAd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="KoltukSayisi" Type="Int32" />
+  </EntityType>
+  <Association Name="FK_Film_Salon">
+    <End Type="Self.Salon" Multiplicity="0..1" Role="Salon" />
+    <End Type="Self.Film" Multiplicity="*" Role="Film" />
+    <ReferentialConstraint>
+      <Principal Role="Salon">
+        <PropertyRef Name="SalonNo" />
+      </Principal>
+      <Dependent Role="Film">
+        <PropertyRef Name="SNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ASinemaEntities6" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Films" EntityType="Self.Film" />
+    <EntitySet Name="Kullanicis" EntityType="Self.Kullanici" />
+    <EntitySet Name="Salons" EntityType="Self.Salon" />
+    <AssociationSet Name="FK_Film_Salon" Association="Self.FK_Film_Salon">
+      <End EntitySet="Salons" Role="Salon" />
+      <End EntitySet="Films" Role="Film" />
+    </AssociationSet>
+    <FunctionImport Name="FAra" ReturnType="Collection(ASinemaModel.FAra_Result)">
+      <Parameter Name="Ad" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="FEkle">
+      <Parameter Name="Ad" Mode="In" Type="String" />
+      <Parameter Name="Tur" Mode="In" Type="String" />
+      <Parameter Name="Sure" Mode="In" Type="Int32" />
+      <Parameter Name="Ucret" Mode="In" Type="Decimal" />
+      <Parameter Name="Puan" Mode="In" Type="Int32" />
+      <Parameter Name="VizyonTarihi" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="FListele" ReturnType="Collection(ASinemaModel.FListele_Result)" />
+    <FunctionImport Name="FSil">
+      <Parameter Name="FilmNo" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="FYenile">
+      <Parameter Name="FilmNo" Mode="In" Type="Int32" />
+      <Parameter Name="Ad" Mode="In" Type="String" />
+      <Parameter Name="Tur" Mode="In" Type="String" />
+      <Parameter Name="Sure" Mode="In" Type="Int32" />
+      <Parameter Name="Ucret" Mode="In" Type="Decimal" />
+      <Parameter Name="Puan" Mode="In" Type="Int32" />
+      <Parameter Name="VizyonTarihi" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="Giris" ReturnType="Collection(ASinemaModel.Giris_Result)">
+      <Parameter Name="kadi" Mode="In" Type="String" />
+      <Parameter Name="sifre" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="KEkle">
+      <Parameter Name="KullaniciAd" Mode="In" Type="String" />
+      <Parameter Name="Sifre" Mode="In" Type="String" />
+      <Parameter Name="AdSoyad" Mode="In" Type="String" />
+      <Parameter Name="Gorev" Mode="In" Type="String" />
+      <Parameter Name="SubeNo" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SAra" ReturnType="Collection(ASinemaModel.SAra_Result)">
+      <Parameter Name="SalonAd" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SEkle">
+      <Parameter Name="SalonAd" Mode="In" Type="String" />
+      <Parameter Name="KoltukSayisi" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SListele" ReturnType="Collection(ASinemaModel.SListele_Result)" />
+    <FunctionImport Name="SSil">
+      <Parameter Name="SalonNo" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SYenile">
+      <Parameter Name="SalonNo" Mode="In" Type="Int32" />
+      <Parameter Name="SalonAd" Mode="In" Type="String" />
+      <Parameter Name="KoltukSayisi" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="Subes" EntityType="ASinemaModel.Sube" />
+    <FunctionImport Name="KAra" ReturnType="Collection(ASinemaModel.KAra_Result)">
+      <Parameter Name="KullaniciAd" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="KListele" ReturnType="Collection(ASinemaModel.KListele_Result)" />
+    <FunctionImport Name="KSil">
+      <Parameter Name="KullaniciNo" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="KYenile">
+      <Parameter Name="KullaniciNo" Mode="In" Type="Int32" />
+      <Parameter Name="KullaniciAd" Mode="In" Type="String" />
+      <Parameter Name="Sifre" Mode="In" Type="String" />
+      <Parameter Name="AdSoyad" Mode="In" Type="String" />
+      <Parameter Name="Gorev" Mode="In" Type="String" />
+      <Parameter Name="SubeNo" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SubeAra" ReturnType="Collection(ASinemaModel.SubeAra_Result)">
+      <Parameter Name="Ad" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SubeEkle">
+      <Parameter Name="Ad" Mode="In" Type="String" />
+      <Parameter Name="SalonSayisi" Mode="In" Type="Int32" />
+      <Parameter Name="CalisanSayisi" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SubeListele" ReturnType="Collection(ASinemaModel.SubeListele_Result)" />
+    <FunctionImport Name="SubeSil">
+      <Parameter Name="SubeNo" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SubeYenile">
+      <Parameter Name="SubeNo" Mode="In" Type="Int32" />
+      <Parameter Name="Ad" Mode="In" Type="String" />
+      <Parameter Name="SalonSayisi" Mode="In" Type="Int32" />
+      <Parameter Name="CalisanSayisi" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="FAra_Result">
+    <Property Type="Int32" Name="FilmNo" Nullable="false" />
+    <Property Type="String" Name="Ad" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Tur" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="Sure" Nullable="true" />
+    <Property Type="Decimal" Name="Ucret" Nullable="true" Precision="19" />
+    <Property Type="Int32" Name="Puan" Nullable="true" />
+    <Property Type="DateTime" Name="VizyonTarihi" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="SNo" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="FListele_Result">
+    <Property Type="Int32" Name="FilmNo" Nullable="false" />
+    <Property Type="String" Name="Ad" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Tur" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="Sure" Nullable="true" />
+    <Property Type="Decimal" Name="Ucret" Nullable="true" Precision="19" />
+    <Property Type="Int32" Name="Puan" Nullable="true" />
+    <Property Type="DateTime" Name="VizyonTarihi" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="SNo" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Giris_Result">
+    <Property Type="Int32" Name="KullaniciNo" Nullable="false" />
+    <Property Type="String" Name="KullaniciAd" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Sifre" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="AdSoyad" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="SAra_Result">
+    <Property Type="Int32" Name="SalonNo" Nullable="false" />
+    <Property Type="String" Name="SalonAd" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="KoltukSayisi" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SListele_Result">
+    <Property Type="Int32" Name="SalonNo" Nullable="false" />
+    <Property Type="String" Name="SalonAd" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="KoltukSayisi" Nullable="true" />
+  </ComplexType>
+  <EntityType Name="Sube">
+    <Key>
+      <PropertyRef Name="SubeNo" />
+    </Key>
+    <Property Name="SubeNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SalonSayisi" Type="Int32" />
+    <Property Name="CalisanSayisi" Type="Int32" />
+    <Property Name="SalonNo" Type="Int32" />
+  </EntityType>
+  <ComplexType Name="KAra_Result">
+    <Property Type="Int32" Name="KullaniciNo" Nullable="false" />
+    <Property Type="String" Name="KullaniciAd" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Sifre" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="AdSoyad" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Gorev" Nullable="true" MaxLength="10" />
+    <Property Type="Int32" Name="SubeNo" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="KListele_Result">
+    <Property Type="Int32" Name="KullaniciNo" Nullable="false" />
+    <Property Type="String" Name="KullaniciAd" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Sifre" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="AdSoyad" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Gorev" Nullable="true" MaxLength="10" />
+    <Property Type="Int32" Name="SubeNo" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SubeAra_Result">
+    <Property Type="Int32" Name="SubeNo" Nullable="false" />
+    <Property Type="String" Name="Ad" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="SalonSayisi" Nullable="true" />
+    <Property Type="Int32" Name="CalisanSayisi" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SubeListele_Result">
+    <Property Type="Int32" Name="SubeNo" Nullable="false" />
+    <Property Type="String" Name="Ad" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="SalonSayisi" Nullable="true" />
+    <Property Type="Int32" Name="CalisanSayisi" Nullable="true" />
+  </ComplexType>
+</Schema>

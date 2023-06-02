@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ASinemaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Film">
+    <Key>
+      <PropertyRef Name="FilmNo" />
+    </Key>
+    <Property Name="FilmNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ad" Type="varchar" MaxLength="50" />
+    <Property Name="Tur" Type="varchar" MaxLength="50" />
+    <Property Name="Sure" Type="int" />
+    <Property Name="Ucret" Type="money" />
+    <Property Name="Puan" Type="int" />
+    <Property Name="VizyonTarihi" Type="datetime" />
+    <Property Name="SNo" Type="int" />
+  </EntityType>
+  <EntityType Name="Kullanici">
+    <Key>
+      <PropertyRef Name="KullaniciNo" />
+    </Key>
+    <Property Name="KullaniciNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KullaniciAd" Type="varchar" MaxLength="50" />
+    <Property Name="Sifre" Type="varchar" MaxLength="50" />
+    <Property Name="AdSoyad" Type="varchar" MaxLength="50" />
+    <Property Name="Gorev" Type="nchar" MaxLength="10" />
+    <Property Name="SubeNo" Type="int" />
+  </EntityType>
+  <EntityType Name="Salon">
+    <Key>
+      <PropertyRef Name="SalonNo" />
+    </Key>
+    <Property Name="SalonNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SalonAd" Type="varchar" MaxLength="50" />
+    <Property Name="KoltukSayisi" Type="int" />
+  </EntityType>
+  <EntityType Name="Sube">
+    <Key>
+      <PropertyRef Name="SubeNo" />
+    </Key>
+    <Property Name="SubeNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ad" Type="varchar" MaxLength="50" />
+    <Property Name="SalonSayisi" Type="int" />
+    <Property Name="CalisanSayisi" Type="int" />
+    <Property Name="SalonNo" Type="int" />
+  </EntityType>
+  <Association Name="FK_Film_Salon">
+    <End Role="Salon" Type="Self.Salon" Multiplicity="0..1" />
+    <End Role="Film" Type="Self.Film" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Salon">
+        <PropertyRef Name="SalonNo" />
+      </Principal>
+      <Dependent Role="Film">
+        <PropertyRef Name="SNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="FAra" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Ad" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="FEkle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Ad" Type="varchar" Mode="In" />
+    <Parameter Name="Tur" Type="varchar" Mode="In" />
+    <Parameter Name="Sure" Type="int" Mode="In" />
+    <Parameter Name="Ucret" Type="money" Mode="In" />
+    <Parameter Name="Puan" Type="int" Mode="In" />
+    <Parameter Name="VizyonTarihi" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="FListele" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="FSil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FilmNo" Type="int" Mode="In" />
+  </Function>
+  <Function Name="FYenile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FilmNo" Type="int" Mode="In" />
+    <Parameter Name="Ad" Type="varchar" Mode="In" />
+    <Parameter Name="Tur" Type="varchar" Mode="In" />
+    <Parameter Name="Sure" Type="int" Mode="In" />
+    <Parameter Name="Ucret" Type="money" Mode="In" />
+    <Parameter Name="Puan" Type="int" Mode="In" />
+    <Parameter Name="VizyonTarihi" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="Giris" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="kadi" Type="varchar" Mode="In" />
+    <Parameter Name="sifre" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="KAra" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="KullaniciAd" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="KEkle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="KullaniciAd" Type="varchar" Mode="In" />
+    <Parameter Name="Sifre" Type="varchar" Mode="In" />
+    <Parameter Name="AdSoyad" Type="varchar" Mode="In" />
+    <Parameter Name="Gorev" Type="varchar" Mode="In" />
+    <Parameter Name="SubeNo" Type="int" Mode="In" />
+  </Function>
+  <Function Name="KListele" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="KSil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="KullaniciNo" Type="int" Mode="In" />
+  </Function>
+  <Function Name="KYenile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="KullaniciNo" Type="int" Mode="In" />
+    <Parameter Name="KullaniciAd" Type="varchar" Mode="In" />
+    <Parameter Name="Sifre" Type="varchar" Mode="In" />
+    <Parameter Name="AdSoyad" Type="varchar" Mode="In" />
+    <Parameter Name="Gorev" Type="nchar" Mode="In" />
+    <Parameter Name="SubeNo" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SAra" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SalonAd" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SEkle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SalonAd" Type="varchar" Mode="In" />
+    <Parameter Name="KoltukSayisi" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SListele" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SSil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SalonNo" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SubeAra" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Ad" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SubeEkle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Ad" Type="varchar" Mode="In" />
+    <Parameter Name="SalonSayisi" Type="int" Mode="In" />
+    <Parameter Name="CalisanSayisi" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SubeListele" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SubeSil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SubeNo" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SubeYenile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SubeNo" Type="int" Mode="In" />
+    <Parameter Name="Ad" Type="varchar" Mode="In" />
+    <Parameter Name="SalonSayisi" Type="int" Mode="In" />
+    <Parameter Name="CalisanSayisi" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SYenile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SalonNo" Type="int" Mode="In" />
+    <Parameter Name="SalonAd" Type="varchar" Mode="In" />
+    <Parameter Name="KoltukSayisi" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="ASinemaModelStoreContainer">
+    <EntitySet Name="Film" EntityType="Self.Film" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kullanici" EntityType="Self.Kullanici" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Salon" EntityType="Self.Salon" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sube" EntityType="Self.Sube" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Film_Salon" Association="Self.FK_Film_Salon">
+      <End Role="Salon" EntitySet="Salon" />
+      <End Role="Film" EntitySet="Film" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
